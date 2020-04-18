@@ -4,21 +4,23 @@ import pyowm
 import random
 from typing import Any, Union
 
-TOKEN = 'token'
+TOKEN = 'token1'
 bot = commands.Bot(command_prefix='.')
-owm = pyowm.OWM('token', language='ru')
+owm = pyowm.OWM('token2', language='ru')
 
 
 @bot.command()
-async def gorod(ctx, *, content:str):
-    await ctx.send(send_echo)
-def send_echo(ctx):
+async def gorod(message, arg):
+    await message.send(send_echo(arg))
+
+def send_echo(arg):
+
     try:
-        observation = owm.weather_at_place(message.text)
+        observation = owm.weather_at_place(arg.message)
         w = observation.get_weather()
         temp = w.get_temperature('celsius')['temp']
 
-        answer: Union[str, Any] = 'В городе ' + str(message.text) + ' ' + w.get_detailed_status() + '\n'
+        answer: Union[str, Any] = 'В городе ' + str(arg.message) + ' ' + w.get_detailed_status() + '\n'
         answer += 'Температура сейчас в районе ' + str(temp) + '\n'
 
         if temp <= 0:
@@ -53,4 +55,3 @@ def send_echo(ctx):
 
 
 bot.run(TOKEN)
-
