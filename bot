@@ -11,7 +11,7 @@ owm = pyowm.OWM('token', language='ru')
 
 @bot.command()
 async def gorod(ctx, *, content:str):
-    await ctx.send(send_echo(ctx))
+    await ctx.send(content)
 def send_echo(ctx):
     try:
         observation = owm.weather_at_place(message.text)
