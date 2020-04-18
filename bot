@@ -10,17 +10,17 @@ owm = pyowm.OWM('token2', language='ru')
 
 
 @bot.command()
-async def gorod(message, arg):
-    await message.send(send_echo(arg))
+async def gorod(ctx, message):
+    await ctx.send(send_echo(message))
 
-def send_echo(arg):
+def send_echo(message):
 
     try:
-        observation = owm.weather_at_place(arg.message)
+        observation = owm.weather_at_place(message.ctx)
         w = observation.get_weather()
         temp = w.get_temperature('celsius')['temp']
 
-        answer: Union[str, Any] = 'В городе ' + str(arg.message) + ' ' + w.get_detailed_status() + '\n'
+        answer: Union[str, Any] = 'В городе ' + str(message.ctx) + ' ' + w.get_detailed_status() + '\n'
         answer += 'Температура сейчас в районе ' + str(temp) + '\n'
 
         if temp <= 0:
